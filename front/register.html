@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Registre-se</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-image: rgb(216, 216, 216);
+        }
+        
+        header {
+            background-image: linear-gradient(37deg, rgb(32, 218, 233), rgb(53, 40, 192));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 30vh;
+            color: white;
+            border-bottom: 1px solid rgb(168, 168, 168);
+            flex-direction: column;
+            margin-bottom: 3em;
+        }
+        
+        main {
+            padding: 20px;
+            position: relative;
+            height: auto;
+        }
+        
+        .content {
+            background-color: rgb(248, 248, 248);
+            position: absolute;
+            height: auto;
+            width: 90%;
+            top: -30px;
+            border-radius: 10px;
+            border: 1px solid rgb(228, 228, 228);
+            left: 50%;
+            transform: translate(-50%, -10%);
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 class="font-weight-bold fa-3x">CADASTRO</h1>
+        <span><a class="text-light" href="index.html"><i class="fas fa-home"></i> Início</a> | Já possui uma conta? <a href="login.html" class="my-link">Entre agora!</a></span>
+    </header>
+
+    <main>
+        <div class="content">
+            <div class="container-fluid my-5">
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 py-2 ">
+                        <h2 class="font-weight-bold">1. Dados gerais*</h2>
+                        <p>Dados básicos de perfil utilizados para identificação do usuário</p>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Nome completo</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Ex: José Silva">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Data de nascimento</label>
+                                    <input type="date" class="form-control" name="" id="" aria-describedby="helpId">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">E-mail</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Ex: jose.silva@example.com">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">CPF</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Ex: 000.000.000-00">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Senha</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Digite sua senha aqui">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Confirmação de senha</label>
+                                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Digite novamente sua senha">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8 py-2 ">
+                        <h2 class="font-weight-bold">2. Anexos</h2>
+                        <p>Dados necessários para efetuar compras na plataforma. Podem ser inseridos mais tarde se preferir :)</p>
+
+                        <hr>
+                        <div class="row mb-5">
+                            <div class="col">
+                                <h3 class="d-flex justify-content-between">Endereços
+                                    <button type="button" data-toggle="modal" data-target="#enderecoModal" class="btn btn-sm btn-primary">
+                                        Adicionar <i class="fas fa-plus ml-2"></i><span class="badge badge-primary"></span>
+                                    </button>
+                                </h3>
+                                <div class="mt-3" id="address_accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="card mt-2 ">
+                                        <div class="card-header bg-white" role="tab">
+                                            <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                                                <a data-toggle="collapse" data-parent="#address_accordion" href="#address_accordion_content_0" aria-expanded="true" aria-controls="address_accordion_content_0">
+                                                    Apelido do endereço
+                                                    <small class="text-muted">Favorito</small>  
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-link"><i class="fas fa-times mr-2"></i>Remover</button>
+                                            </h5>
+                                        </div>
+                                        <div id="address_accordion_content_0" class="collapse in" role="tabpanel">
+                                            <div class="card-body">
+                                                <ul class="list-unstyled">
+                                                    <li><strong>CEP: </strong>00000-000</li>
+                                                    <li><strong>Estado: </strong>São Paulo</li>
+                                                    <li><strong>Cidade: </strong>Suzano</li>
+                                                    <li><strong>Rua: </strong>Rua Taboão</li>
+                                                    <li><strong>Número: </strong>0000</li>
+                                                    <li><strong>Complemento: </strong>--</li>
+                                                    <li><strong>Apelido: </strong>Apelido do endereço</li>
+                                                    <li><strong>É favorito: </strong>Sim</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h3 class="d-flex justify-content-between">Cartões de crédito
+                                    <button type="button" data-toggle="modal" data-target="#cartaoModal" class="btn btn-sm btn-primary">
+                                        Adicionar <i class="fas fa-plus ml-2"></i><span class="badge badge-primary"></span>
+                                    </button>
+                                </h3>
+                                <div class="mt-3" id="cart_accordion_0" role="tablist" aria-multiselectable="true">
+                                    <div class="card mt-2 ">
+                                        <div class="card-header bg-white" role="tab">
+                                            <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                                                <a data-toggle="collapse" data-parent="#accordianId" href="#cart_accordion_content_0" aria-expanded="true" aria-controls="cart_accordion_content_0">
+                                                    Apelido do cartão
+                                                    <small class="text-muted">Favorito</small>  
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-link"><i class="fas fa-times mr-2"></i>Remover</button>
+                                            </h5>
+                                        </div>
+                                        <div id="cart_accordion_content_0" class="collapse in" role="tabpanel">
+                                            <div class="card-body">
+                                                <ul class="list-unstyled">
+                                                    <li><strong>Número: </strong>0000 0000 0000 0000</li>
+                                                    <li><strong>Bandeira: </strong><img src="https://img2.gratispng.com/20180821/jpy/kisspng-mastercard-logo-credit-card-maestro-payment-card-mastercard-mastercard-logo-design-vector-free-down-5b7bd9c7c83ef0.9372206915348433358202.jpg"
+                                                            height="20px" alt="" /></li>
+                                                    <li><strong>CVV: </strong>000</li>
+                                                    <li><strong>Validade até: </strong>12/2030</li>
+                                                    <li><strong>Nome completo: </strong>JOSE SILVA</li>
+                                                    <li><strong>Apelido: </strong>Apelido do cartão</li>
+                                                    <li><strong>É favorito: </strong>Sim</li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-5 justify-content-center">
+                    <button type="submit" class="btn btn-success btn-lg px-5 font-weight-bold">
+                        <a href="index.html">
+                        REGISTRAR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="enderecoModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo endereço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="address_cep">CEP</label>
+                                <input type="text" class="form-control" id="address_cep" placeholder="00000-000">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address_state">Estado</label>
+                                <select class="form-control" id="address_state">
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address_city">Cidade</label>
+                                <select class="form-control" id="address_city">
+                                  <option></option>
+                                  <option></option>
+                                  <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="address_street">Rua</label>
+                                <input type="text" class="form-control" maxlength="100" id="address_street" placeholder="Ex: Rua capão redondo">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="address_number">Número</label>
+                                <input type="text" maxlength="4" class="form-control" id="address_number" placeholder="0000">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="address_complement">Complemento</label>
+                                <input type="text" maxlength="100" class="form-control" id="address_complement" placeholder="Ex: Bloco 10, apt. 15">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="address_nickname">Apelido </label>
+                                <input type="text" class="form-control" id="address_nickname" maxlength="100" placeholder="Ex: Endereço principal">
+                                <p class="form-text text-muted"><small>Insira um apelido para esse endereço</small> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="checkbox" class="form-check-input" id="address_favorite" value="true" >
+                                  Adicionar como favorito?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success">Adicionar <i class="fas fa-plus ml-2"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="cartaoModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo cartão de crédito</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="cart_number">Número</label>
+                                <input type="text" class="form-control" id="cart_number" placeholder="0000 0000 0000 0000">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cart_flag">Bandeira</label>
+                                <select class="form-control" id=" cart_flag">
+                                      <option></option>
+                                      <option></option>
+                                      <option></option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="cart_date">Data de expiração</label>
+                                <input type="month" class="form-control" id="cart_date">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cart_cvv">CVV</label>
+                                <input type="text" maxlength="3" class="form-control" id="cart_cvv" placeholder="000">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="cart_name">Nome completo</label>
+                                <input type="text" class="form-control" id="cart_name" maxlength="100" placeholder="Ex: JOSÉ SILVA">
+                                <p class="form-text text-muted"><small>Insira o nome escrito no cartão</small></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="cart_nickname">Apelido </label>
+                                <input type="text" class="form-control" id="cart_nickname" maxlength="100" placeholder="Ex: Cartão principal">
+                                <p class="form-text text-muted"><small>Insira um apelido para esse cartão</small> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="checkbox" class="form-check-input" id="cart_favorite" value="true" >
+                                  Adicionar como favorito?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success">Adicionar <i class="fas fa-plus ml-2"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.1.1/js/all.js" integrity="sha384-BtvRZcyfv4r0x/phJt9Y9HhnN5ur1Z+kZbKVgzVBAlQZX4jvAuImlIz+bG7TS00a" crossorigin="anonymous"></script>
+</body>
+
+</html>
