@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import br.edu.fatec.les.dominio.AEntidade;
@@ -22,10 +23,6 @@ public class UsuarioDAO implements IDao{
 	
 	private Connection conn = null;
 	private Mensagem mensagem;
-	EnderecoDAO enderecoDao = new EnderecoDAO();
-	TelefoneDAO telefoneDao	= new TelefoneDAO();
-	CartaoDao cartaoDao = new CartaoDao();
-	
 
 	@Override
 	public Mensagem salvar(AEntidade entidade) throws SQLException {
@@ -36,28 +33,20 @@ public class UsuarioDAO implements IDao{
 		ResultSet rs;
 		
 		String sql = "INSERT INTO tb_usuario ("
-				+ "usu_nome, "
 				+ "usu_email, "
 				+ "usu_senha, "
-				+ "usu_cpf, "
-				+ "usu_dt_nascimento, "
-				+ "usu_genero, "
 				+ "usu_admin, "
 				+ "usu_ativo, "
 				+ "usu_dt_cadastro, "
 				+ "usu_dt_atualizacao"
 				+ ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, FALSE, TRUE, NOW(), NOW())";
-						// 1, 2, 3, 4, 5, 6,
+				+ "VALUES (?, ?, FALSE, TRUE, NOW(), NOW())";
+						// 1, 2, 3, 
 		
 		try {
 			pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstm.setString(1, usuario.getNome());
-			pstm.setString(2, usuario.getEmail());
-			pstm.setString(3, usuario.getSenha());
-			pstm.setString(4, usuario.getCpf());
-			pstm.setObject(5, usuario.getDtNascimento());
-			pstm.setString(6, usuario.getGenero().toString());
+			pstm.setString(1, usuario.getEmail());
+			pstm.setString(2, usuario.getSenha());
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();
@@ -78,7 +67,6 @@ public class UsuarioDAO implements IDao{
 	@Override
 	public Mensagem atualizar(AEntidade entidade) throws SQLException {
 		Usuario usuario = (Usuario) entidade;
-		Endereco endereco = new Endereco();
 		conn = ConnectionFactory.getConnection();
 		PreparedStatement pstm = null;
 		mensagem = new Mensagem();
@@ -87,6 +75,7 @@ public class UsuarioDAO implements IDao{
 			if (usuario.getSenha() != null) {
 				String sql = "UPDATE tb_usuario SET "
 						+ "usu_senha = ? "
+						+ "usu_dt_atualizacao = NOW() "
 						+ "WHERE usu_id = ?";
 				
 				pstm = conn.prepareStatement(sql);
@@ -98,30 +87,13 @@ public class UsuarioDAO implements IDao{
 				mensagem.setMsgStatus(MensagemStatus.SUCESSO);
 			} else {
 				String sql = "UPDATE tb_usuario SET "
-						+ "usu_nome = ?"
 						+ "usu_email = ?"
-						+ "usu_cpf = ?"
-						+ "usu_dt_nascimento = ?"
-						+ "usu_genero = ?"
-						+ "usu_admin = ?"
 						+ "usu_dt_atualizacao = NOW() "
 						+ "WHERE usu_id = ?";
 				
 				pstm = conn.prepareStatement(sql);
-				pstm.setString(1, usuario.getNome());
-				pstm.setString(2, usuario.getEmail());
-				pstm.setString(3, usuario.getCpf());
-				pstm.setObject(4, usuario.getDtNascimento());
-				pstm.setString(5, usuario.getGenero().toString());
-				pstm.setBoolean(6, usuario.isAdmin());
-				pstm.setLong(7, usuario.getId());
-				
-				List<AEntidade> BDEndereco = new ArrayList<AEntidade>();
-				endereco = new Endereco(); // dnv?
-				end
-				
-				
-				
+				pstm.setString(1, usuario.getEmail());
+				pstm.setLong(2, usuario.getId());
 				pstm.executeUpdate();
 				
 				mensagem.setMsg("Usuário atualizado com sucesso");
@@ -148,12 +120,7 @@ public class UsuarioDAO implements IDao{
 				+ "usu_ativo = false "
 				+ "WHERE usu_id = ? AND usu_id != 1";
 		
-		endereco.setcliente();
 		try {
-			if (enderecoDao.deletar(endereco).getMsgStatus() == MensagemStatus.ERRO) {
-				throw new SQLException();
-			}
-			
 			pstm = conn.prepareStatement(sql);
 			pstm.setLong(1, usuario.getId());
 			pstm.executeUpdate();
@@ -173,22 +140,15 @@ public class UsuarioDAO implements IDao{
 	public List<AEntidade> consultar(AEntidade entidade) throws SQLException {
 		Usuario usuario = (Usuario) entidade;
 		conn = ConnectionFactory.getConnection();
-		List<AEntidade> usuarios = new ArrayList<AEntidade>();
-		List<AEntidade> bancoEnderecos = new ArrayList<AEntidade>();
-		
-		List<Endereco> enderecos = new ArrayList<Endereco>();
-		
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		
+		List<AEntidade> usuarios = new ArrayList<AEntidade>();
+		
 		String sql = "SELECT "
 				+ "usu_id, "
-				+ "usu_nome, "
 				+ "usu_email, "
 				+ "usu_senha, "
-				+ "usu_cpf, "
-				+ "usu_dt_nascimento, "
-				+ "usu_genero, "
 				+ "usu_admin, "
 				+ "usu_ativo, "
 				+ "usu_dt_cadastro, "
@@ -209,52 +169,23 @@ public class UsuarioDAO implements IDao{
 		if (usuario.getSenha() != null) {
 			sql += "AND usu_senha = '" + usuario.getSenha() + "' ";
 		}
-		if (usuario.getCpf() != null) {
-			sql += "AND usu_cpf = '" + usuario.getCpf() + "' ";
-		}
-		if (usuario.getDtNascimento() != null) {
-			sql += "AND usu_dt_nasimento = '" + usuario.getDtNascimento() + "' ";
-		}
-		if (usuario.getGenero() != null) {
-			sql += "AND usu_genero = '" + usuario.getGenero() + "' ";
-		}
-		if (usuario.getNome() != null) {
-			sql += "AND usu_nome LIKE '" + usuario.getNome() + "' ";
-		}
 		
 		try {
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			
 			Usuario usu = new Usuario();
-			Endereco end = new Endereco();
 			
 			while (rs.next()) {
 				usu = new Usuario();
-				end = new Endereco();
-				
-				listaEnderecos = new ArrayList<AEntidade>();
-				enderecos = new ArrayList<Endereco>();
 				
 				usu.setId(rs.getLong("usu_id"));
-				usu.setNome(rs.getString("usu_nome"));
 				usu.setEmail(rs.getString("usu_email"));
 				usu.setSenha(rs.getString("usu_senha"));
-				usu.setCpf(rs.getString("usu_cpf"));
-				usu.setDtNascimento(rs.getObject("usu_dt_nascimento", LocalDate.class));
-				usu.setGenero(Generos.valueOf(rs.getString("usu_genero")));
 				usu.setAdmin(rs.getBoolean("usu_admin"));
 				usu.setAtivo(rs.getBoolean("usu_ativo"));
 				usu.setDtCadastro(rs.getObject("usu_dt_cadastro", LocalDateTime.class));
 				usu.setDtAtualizacao(rs.getObject("usu_dt_atualizacao", LocalDateTime.class));
-				
-				end.setusuario();
-				bancoEnderecos.addAll(enderecoDao.consultar(end));
-				for (AEntidade endereco : bancoEnderecos) {
-					enderecos.add((Endereco) endereco);
-				}
-				
-				usu.setEnderecos(enderecos);
 				
 				usuarios.add(usu);
 			}

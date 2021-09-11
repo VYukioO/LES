@@ -11,7 +11,8 @@ public class Cartao extends EntidadeNome{
 	private String bandeira;
 	private int cvc;
 	private boolean favorito;
-	
+	private Cliente cliente;
+
 	public String getNumero() {
 		return numero;
 	}
@@ -58,6 +59,14 @@ public class Cartao extends EntidadeNome{
 	
 	public void setFavorito(boolean favorito) {
 		this.favorito = favorito;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 }

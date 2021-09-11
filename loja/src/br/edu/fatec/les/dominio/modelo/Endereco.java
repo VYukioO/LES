@@ -18,6 +18,7 @@ public class Endereco extends EntidadeNome {
 	private TipoLogradouro tipoLogradouro;
 	private TipoEndereco tipoEndereco;
 	private boolean favorito;
+	private Cliente cliente;
 	
 	public String getLogradouro() {
 		return logradouro;
@@ -90,6 +91,12 @@ public class Endereco extends EntidadeNome {
 	}
 	public void setFavorito(boolean favorito) {
 		this.favorito = favorito;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 }
