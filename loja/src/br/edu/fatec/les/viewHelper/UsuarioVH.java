@@ -2,6 +2,7 @@ package br.edu.fatec.les.viewHelper;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.edu.fatec.les.dao.ClienteDAO;
 import br.edu.fatec.les.dominio.AEntidade;
 import br.edu.fatec.les.dominio.enums.Generos;
+import br.edu.fatec.les.dominio.modelo.Cliente;
 import br.edu.fatec.les.dominio.modelo.Usuario;
 import br.edu.fatec.les.facade.Mensagem;
 import br.edu.fatec.les.facade.MensagemStatus;
@@ -21,37 +24,24 @@ public class UsuarioVH implements IViewHelper {
 	@Override
 	public AEntidade getEntidade(HttpServletRequest req) {
 		Usuario usuario = new Usuario();
-		TelefoneVH telefoneVh = new TelefoneVH();
-		EnderecoVH enderecoVh = new EnderecoVH();
-		CartaoVH cartaoVh = new CartaoVH();
-		
 		String tarefa = req.getParameter("tarefa");
 		
-		if (tarefa.equals("cadastrarUsuario") ||
-				tarefa.equals("atualizarUsuario")) {
-			if (req.getParameter("uId") != null) {
-				usuario.setId(Long.parseLong(req.getParameter("uId")));
-			}
-			
-			usuario.setNome(req.getParameter("uNome"));
-			usuario.setEmail(req.getParameter("uEmail"));
-			usuario.setSenha(req.getParameter("uSenha"));
-			usuario.setCpf(req.getParameter("uCpf"));
-			usuario.setDtNascimento(req.getParameter("uDtNasc"));
-			usuario.setGenero(Generos.valueOf(req.getParameter("uGenero")));
-			usuario.setTelefone(telefoneVh.getEntidade(req));
-			usuario.setAdmin(req.getParameter("uAdmin"));
-			usuario.setEnderecos(enderecoVh.getEntidade(req));
-			usuario.setCartoes(cartaoVh.getEntidade(req));
-		
+		if (tarefa.equals("atualizarCliente") ||
+				tarefa.equals("deletarCliente") ||
+				tarefa.equals("editarCliente")) {
+			usuario.setId(Long.parseLong(req.getParameter("usuId")));
 		}
-		return usuario;
 		
 		if (tarefa.equals("alterarSenha")) {
-			usuario.setId(Long.parseLong(req.getParameter("uId")));
-			usuario.setSenha(req.getParameter("uSenha"));
+			usuario.setId(Long.parseLong(req.getParameter("usuId")));
+			usuario.setSenha(req.getParameter("usuSenha"));
 			return usuario;
 		}
+		
+		usuario.setAdmin(false);
+		usuario.setEmail(req.getParameter("usuEmail"));
+		usuario.setEmail(req.getParameter("usuSenha"));
+		return usuario;
 	}
 
 	@Override
@@ -88,8 +78,12 @@ public class UsuarioVH implements IViewHelper {
 				
 				if (!usuario.isAdmin()) {
 					try {
-						// pegar dados do cliente/usuario?
-						// ou ja ta na variavel usuario?
+						ClienteDAO clienteDao = new ClienteDAO();
+						Cliente cliente = new Cliente();
+						
+						cliente.setUsuario(usuario);
+						cliente = (Cliente) clienteDao.consultar(cliente).get(0);
+						session.setAttribute("cliente", cliente);
 					} catch (SQLException e) {
 						// TODO: handle exception
 					}

@@ -12,8 +12,8 @@ import br.edu.fatec.les.dominio.AEntidade;
 import br.edu.fatec.les.dominio.enums.TipoEndereco;
 import br.edu.fatec.les.dominio.enums.TipoLogradouro;
 import br.edu.fatec.les.dominio.enums.TipoResidencia;
+import br.edu.fatec.les.dominio.modelo.Cliente;
 import br.edu.fatec.les.dominio.modelo.Endereco;
-import br.edu.fatec.les.dominio.modelo.Usuario;
 import br.edu.fatec.les.facade.Mensagem;
 import br.edu.fatec.les.facade.MensagemStatus;
 import br.edu.fatec.les.util.ConnectionFactory;
@@ -40,7 +40,7 @@ public class EnderecoDAO implements IDao{
 				+ "end_cidade, "
 				+ "end_estado, "
 				+ "end_pais, "
-				+ "end_usu_id, "
+				+ "end_cli_id, "
 				+ "end_tipo_residencia, "
 				+ "end_tipo_endereco, "
 				+ "end_favorito, "
@@ -61,7 +61,7 @@ public class EnderecoDAO implements IDao{
 			pstm.setString(7, endereco.getCidade());
 			pstm.setString(8, endereco.getEstado());
 			pstm.setString(9, endereco.getPais());
-			pstm.setString(10, id_cliente);
+			pstm.setLong(10, endereco.getCliente().getId());
 			pstm.setString(11, endereco.getTipoResidencia().toString());
 			pstm.setString(12, endereco.getTipoEndereco().toString());
 			pstm.setBoolean(13, endereco.isFavorito());
@@ -75,13 +75,11 @@ public class EnderecoDAO implements IDao{
 			ConnectionFactory.closeConnection(conn, pstm);
 		}
 		return mensagem;
-
 	}
 
 	@Override
 	public Mensagem atualizar(AEntidade entidade) throws SQLException {
 		throw new UnsupportedOperationException("Operação não suportada");
-		//?
 	}
 
 	@Override
@@ -92,13 +90,14 @@ public class EnderecoDAO implements IDao{
 		PreparedStatement pstm = null;
 		
 		String sql = "UPDATE tb_endereco SET "
-				+ "end_ativo = false "
+				+ "end_ativo = false, "
+				+ "end_dt_atualizacao = NOW() "
 				+ "WHERE ";
 		
 		if (endereco.getId() != null) {
 			sql += "end_id = " + endereco.getId() + " ";
 		} else {
-			sql += "end_usu_id = " + endereco.getCliente().getId() + " ";
+			sql += "end_cli_id = " + endereco.getCliente().getId() + " ";
 		}
 		
 		try {
@@ -121,6 +120,7 @@ public class EnderecoDAO implements IDao{
 		Endereco endereco = (Endereco) entidade;
 		conn = ConnectionFactory.getConnection();
 		Endereco end = new Endereco();
+		Cliente cli = new Cliente();
 		List<AEntidade> enderecos = new ArrayList<AEntidade>();
 		
 		PreparedStatement pstm = null;
@@ -138,21 +138,26 @@ public class EnderecoDAO implements IDao{
 				+ "end_estado, "
 				+ "end_pais, "
 				+ "end_complemento, "
-				+ "end_usu_id, "
+				+ "end_cli_id, "
 				+ "end_tipo_residencia, "
 				+ "end_tipo_endereco, "
 				+ "end_favorito, "
 				+ "end_ativo, "
 				+ "end_dt_cadastro, "
-				+ "end_dt_atualizacao ";
+				+ "end_dt_atualizacao "
+				+ "FROM tb_endereco ";
 		
 		if (endereco.isAtivo()) {
 			sql += "WHERE end_ativo = 1 ";
+		} else {
+			sql += "WHERE (end_ativo = 1 OR end_ativo = 0) ";
 		}
 		if (endereco.getId() != null) {
 			sql += "AND end_id = " + endereco.getId() + " ";
 		}
-		// fazer pesquisar pelo cliente
+		if (endereco.getCliente() != null && endereco.getCliente().getId() != null) {
+			sql += "AND end_cli_id = " + endereco.getCliente().getId() + " ";
+		}
 		
 		try {
 			pstm = conn.prepareStatement(sql);
@@ -160,6 +165,10 @@ public class EnderecoDAO implements IDao{
 			
 			while (rs.next()) {
 				end = new Endereco();
+				cli = new Cliente();
+				
+				cli.setId(Long.parseLong(rs.getString("end_cli_id")));
+				end.setCliente(cli);
 				
 				end.setId(rs.getLong("end_id"));
 				end.setNome(rs.getString("end_nome"));

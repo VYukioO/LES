@@ -10,12 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.fatec.les.dominio.AEntidade;
-import br.edu.fatec.les.dominio.enums.TipoEndereco;
-import br.edu.fatec.les.dominio.enums.TipoLogradouro;
-import br.edu.fatec.les.dominio.enums.TipoResidencia;
 import br.edu.fatec.les.dominio.modelo.Cartao;
-import br.edu.fatec.les.dominio.modelo.Endereco;
-import br.edu.fatec.les.dominio.modelo.Usuario;
 import br.edu.fatec.les.facade.Mensagem;
 import br.edu.fatec.les.facade.MensagemStatus;
 import br.edu.fatec.les.util.ConnectionFactory;
@@ -39,7 +34,7 @@ public class CartaoDAO implements IDao{
 				+ "crt_validade, "
 				+ "crt_bandeira, "
 				+ "crt_cvc, "
-				+ "crt_usu_id, "
+				+ "crt_cli_id, "
 				+ "crt_favorito, "
 				+ "crt_ativo, "
 				+ "crt_dt_cadastro, "
@@ -55,7 +50,7 @@ public class CartaoDAO implements IDao{
 			pstm.setObject(4, cartao.getValidade());
 			pstm.setString(5, cartao.getBandeira());
 			pstm.setInt(6, cartao.getCvc());
-			pstm.setString(7, cartao.getCliente().getId());
+			pstm.setLong(7, cartao.getCliente().getId());
 			pstm.setBoolean(8, cartao.isFavorito());
 			
 			mensagem.setMsg("Cartão cadastrado com sucesso.");
@@ -72,7 +67,6 @@ public class CartaoDAO implements IDao{
 	@Override
 	public Mensagem atualizar(AEntidade entidade) throws SQLException {
 		throw new UnsupportedOperationException("Operação não suportada");
-		//?
 	}
 
 	@Override
@@ -84,6 +78,7 @@ public class CartaoDAO implements IDao{
 		
 		String sql = "UPDATE tb_cartao SET "
 				+ "crt_ativo = false "
+				+ "crt_dt_atualizacao = NOW() "
 				+ "WHERE ";
 		
 		if (cartao.getId() != null) {
@@ -129,15 +124,17 @@ public class CartaoDAO implements IDao{
 				+ "crt_favorito, "
 				+ "crt_ativo, "
 				+ "crt_dt_cadastro, "
-				+ "crt_dt_atualizacao ";
+				+ "crt_dt_atualizacao "
+				+ "FROM tb_cartao ";
 		
 		if (cartao.isAtivo()) {
 			sql += "WHERE crt_ativo = 1 ";
 		}
 		if (cartao.getId() != null) {
 			sql += "AND crt_id = " + cartao.getId() + " ";
+		} else {
+			sql += "AND crt_cli_id = " + cartao.getCliente().getId() + " ";
 		}
-		// fazer pesquisar pelo cliente
 		
 		try {
 			pstm = conn.prepareStatement(sql);

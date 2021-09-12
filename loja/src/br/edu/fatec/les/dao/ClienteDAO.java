@@ -335,6 +335,7 @@ public class ClienteDAO implements IDao {
 				cli.setAtivo(rs.getBoolean("cli_ativo"));
 				cli.setDtCadastro(rs.getObject("cli_dt_cadastro", LocalDateTime.class));
 				cli.setDtAtualizacao(rs.getObject("cli_dt_atualizacao", LocalDateTime.class));
+				
 				// pegar telefone do cliente
 				tel.setCliente(cli);
 				cli.setTelefone((Telefone) telefoneDao.consultar(tel).get(0));

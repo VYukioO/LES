@@ -74,7 +74,7 @@ public class UsuarioDAO implements IDao{
 		try {
 			if (usuario.getSenha() != null) {
 				String sql = "UPDATE tb_usuario SET "
-						+ "usu_senha = ? "
+						+ "usu_senha = ?, "
 						+ "usu_dt_atualizacao = NOW() "
 						+ "WHERE usu_id = ?";
 				
@@ -87,7 +87,7 @@ public class UsuarioDAO implements IDao{
 				mensagem.setMsgStatus(MensagemStatus.SUCESSO);
 			} else {
 				String sql = "UPDATE tb_usuario SET "
-						+ "usu_email = ?"
+						+ "usu_email = ?,"
 						+ "usu_dt_atualizacao = NOW() "
 						+ "WHERE usu_id = ?";
 				
@@ -117,7 +117,8 @@ public class UsuarioDAO implements IDao{
 		mensagem = new Mensagem();
 		
 		String sql = "UPDATE tb_usuario SET "
-				+ "usu_ativo = false "
+				+ "usu_ativo = false, "
+				+ "usu_dt_atualizacao = NOW() "
 				+ "WHERE usu_id = ? AND usu_id != 1";
 		
 		try {

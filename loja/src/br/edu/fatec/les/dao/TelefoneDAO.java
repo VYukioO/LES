@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.edu.fatec.les.dominio.AEntidade;
 import br.edu.fatec.les.dominio.enums.TipoTelefone;
+import br.edu.fatec.les.dominio.modelo.Cliente;
 import br.edu.fatec.les.dominio.modelo.Telefone;
 import br.edu.fatec.les.facade.Mensagem;
 import br.edu.fatec.les.facade.MensagemStatus;
@@ -31,7 +32,7 @@ public class TelefoneDAO implements IDao{
 				+ "tel_ddd, "
 				+ "tel_numero, "
 				+ "tel_tipo_telefone, "
-				+ "tel_usu_id, "
+				+ "tel_cli_id, "
 				+ "tel_ativo, "
 				+ "tel_dt_cadastro, "
 				+ "tel_dt_atualizacao "
@@ -43,7 +44,7 @@ public class TelefoneDAO implements IDao{
 			pstm.setInt(1, telefone.getDdd());
 			pstm.setString(2, telefone.getNumero());
 			pstm.setString(3, telefone.getTipoTelefone().toString());
-			pstm.setLong(4, usuario.getId());
+			pstm.setLong(4, telefone.getCliente().getId());
 			
 			mensagem.setMsg("Telefone cadastrado com sucesso");
 			mensagem.setMsgStatus(MensagemStatus.OPERACAO);
@@ -58,8 +59,7 @@ public class TelefoneDAO implements IDao{
 
 	@Override
 	public Mensagem atualizar(AEntidade entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Operação não suportada");
 	}
 
 	@Override
@@ -70,13 +70,14 @@ public class TelefoneDAO implements IDao{
 		PreparedStatement pstm = null;
 		
 		String sql = "UPDATE tb_telefone SET "
-				+ "tel_ativo = false "
+				+ "tel_ativo = false, "
+				+ "tel_dt_atualizacao = NOW() "
 				+ "WHERE ";
 		
 		if (telefone.getId() != null) {
 			sql += "tel_id = " + telefone.getId() + " ";
 		} else {
-			sql += "tel_usu_id = " + telefone.getcliente().getid() + " ";
+			sql += "tel_cli_id = " + telefone.getCliente().getId() + " ";
 		}
 		
 		try {
@@ -99,6 +100,7 @@ public class TelefoneDAO implements IDao{
 		Telefone telefone = (Telefone) entidade;
 		conn = ConnectionFactory.getConnection();
 		Telefone tel = new Telefone();
+		Cliente cli = new Cliente();
 		
 		List<AEntidade> telefones = new ArrayList<AEntidade>();
 		
@@ -110,7 +112,7 @@ public class TelefoneDAO implements IDao{
 				+ "tel_ddd, "
 				+ "tel_numero, "
 				+ "tel_tipo_telefone, "
-				+ "tel_usu_id, "
+				+ "tel_cli_id, "
 				+ "tel_ativo, "
 				+ "tel_dt_cadastro, "
 				+ "tel_dt_atualizacao "
@@ -128,8 +130,8 @@ public class TelefoneDAO implements IDao{
 		if (telefone.getTipoTelefone() != null) {
 			sql += "AND tel_tipo_telefone = " + telefone.getTipoTelefone() + " ";
 		}
-		if (telefone.getusuario().getid()) {
-			sql += "AND tel_usu_id = " + telefone.getusuario().getid() + " "
+		if (telefone.getCliente().getId() != null) {
+			sql += "AND tel_cli_id = " + telefone.getCliente().getId() + " ";
 		}
 		
 		try {
@@ -138,6 +140,10 @@ public class TelefoneDAO implements IDao{
 			
 			while (rs.next()) {
 				tel = new Telefone();
+				cli = new Cliente();
+				
+				cli.setId(rs.getLong("tel_cli_id"));
+				tel.setCliente(cli);
 				
 				tel.setId(rs.getLong("tel_id"));
 				tel.setDdd(rs.getInt("tel_ddd"));
