@@ -1,7 +1,6 @@
 package br.edu.fatec.les.viewHelper;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -18,6 +16,7 @@ import br.edu.fatec.les.dominio.enums.Generos;
 import br.edu.fatec.les.dominio.modelo.Cartao;
 import br.edu.fatec.les.dominio.modelo.Cliente;
 import br.edu.fatec.les.dominio.modelo.Endereco;
+import br.edu.fatec.les.dominio.modelo.Telefone;
 import br.edu.fatec.les.dominio.modelo.Usuario;
 import br.edu.fatec.les.facade.Mensagem;
 import br.edu.fatec.les.facade.MensagemStatus;
@@ -35,8 +34,7 @@ public class ClienteVH implements IViewHelper {
 		
 		String tarefa = req.getParameter("tarefa");
 		
-		if (tarefa.equals("cadastrarCliente") ||
-				tarefa.equals("atualizarCliente")) {
+		if (tarefa.equals("cadastrarCliente") || tarefa.equals("atualizarCliente")) {
 			if (req.getParameter("cliId") != null) {
 				cliente.setId(Long.parseLong(req.getParameter("cliId")));
 			}
@@ -45,9 +43,9 @@ public class ClienteVH implements IViewHelper {
 			cliente.setCpf(req.getParameter("cliCpf"));
 			cliente.setDtNascimento(LocalDate.parse(req.getParameter("cliDtNasc")));
 			cliente.setGenero(Generos.valueOf(req.getParameter("cliGenero")));
-			cliente.setTelefone(telefoneVh.getEntidade(req));
+			cliente.setTelefone((Telefone) telefoneVh.getEntidade(req));
 			cliente.setEnderecos(enderecoVh.getEntidades(req));
-			cliente.setCartoes(cartaoVh.getEntidade(req));
+			cliente.setCartoes(cartaoVh.getEntidades(req));
 
 			for (Endereco end : cliente.getEnderecos()) {
 				end.setCliente(cliente);

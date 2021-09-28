@@ -1,7 +1,6 @@
 package br.edu.fatec.les.viewHelper;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import br.edu.fatec.les.dao.ClienteDAO;
 import br.edu.fatec.les.dominio.AEntidade;
-import br.edu.fatec.les.dominio.enums.Generos;
 import br.edu.fatec.les.dominio.modelo.Cliente;
 import br.edu.fatec.les.dominio.modelo.Usuario;
 import br.edu.fatec.les.facade.Mensagem;

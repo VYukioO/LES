@@ -1,19 +1,11 @@
 package br.edu.fatec.les.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import br.edu.fatec.les.dominio.AEntidade;
-import br.edu.fatec.les.dominio.enums.Generos;
-import br.edu.fatec.les.dominio.modelo.Endereco;
 import br.edu.fatec.les.dominio.modelo.Usuario;
 import br.edu.fatec.les.facade.Mensagem;
 import br.edu.fatec.les.facade.MensagemStatus;
@@ -31,7 +23,7 @@ public class UsuarioDAO implements IDao{
 		mensagem = new Mensagem();
 		PreparedStatement pstm = null;
 		ResultSet rs;
-		
+	
 		String sql = "INSERT INTO tb_usuario ("
 				+ "usu_email, "
 				+ "usu_senha, "
@@ -56,6 +48,7 @@ public class UsuarioDAO implements IDao{
 				return mensagem;
 			}
 		} catch (SQLException e) {
+			System.out.println(e);
 			mensagem.setMsg("Ocorreu um erro durante a operação. Tente novamente.");
 			mensagem.setMsgStatus(MensagemStatus.ERRO);
 		} finally {
@@ -111,7 +104,6 @@ public class UsuarioDAO implements IDao{
 	@Override
 	public Mensagem deletar(AEntidade entidade) throws SQLException {
 		Usuario usuario = (Usuario) entidade;
-		Endereco endereco = new Endereco();
 		conn = ConnectionFactory.getConnection();
 		PreparedStatement pstm = null;
 		mensagem = new Mensagem();

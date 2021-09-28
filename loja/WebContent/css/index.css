@@ -1,0 +1,42 @@
+.card {
+    color: rgb(39, 39, 39);
+}
+
+.glass {
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.glass__input {
+    border: unset;
+    background-color: rgba(0, 0, 0, 0.308) !important;
+    outline: unset;
+    border-radius: 5px;
+    color: white;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.glass__input::placeholder {
+    color: rgb(201, 201, 201);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.glass__input:hover, .glass__input:focus {
+    outline: 1px solid rgb(67, 86, 255);
+}
+
+.white-hr {
+    border-color: white;
+}
+
+.my-link {
+    text-decoration: none;
+    color: rgb(255, 210, 8);
+    font-weight: bolder;
+}

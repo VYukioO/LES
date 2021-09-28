@@ -1,12 +1,8 @@
 package br.edu.fatec.les.dominio.modelo;
 
-import java.time.LocalDate;
-import java.util.List;
+import br.edu.fatec.les.dominio.EntidadeDominio;
 
-import br.edu.fatec.les.dominio.EntidadeNome;
-import br.edu.fatec.les.dominio.enums.Generos;
-
-public class Usuario extends EntidadeNome{
+public class Usuario extends EntidadeDominio{
 	private String email;
 	private String senha;
 	private boolean admin;

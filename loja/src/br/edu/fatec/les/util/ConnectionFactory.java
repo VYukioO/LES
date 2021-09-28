@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	public static Connection getConnection() {
-		String driverName = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost/les";
+		String driverName = "com.mysql.cj.jdbc.Driver";
+		String url = "jdbc:mysql://localhost/les?useTimezone=true&serverTimezone=UTC";
 		String user = "root";
 		String password = "root";
 		
