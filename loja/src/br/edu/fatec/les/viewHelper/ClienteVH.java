@@ -102,7 +102,7 @@ public class ClienteVH implements IViewHelper {
 			Resultado resultado = new Resultado();
 			resultado = (Resultado) req.getAttribute("resultado");
 			
-			for (AEntidade cli : resultado.getEntidade()) {
+			for (AEntidade cli : resultado.getEntidades()) {
 				Cliente cliente = (Cliente)	cli;
 				clientes.add(cliente);
 			}
@@ -114,7 +114,7 @@ public class ClienteVH implements IViewHelper {
 		} else if (tarefa.equals("deletarCliente")) {
 			req.getRequestDispatcher("clienteLista.jsp").forward(req, resp);
 		} else {
-			resp.sendRedirect("index.html");
+			resp.sendRedirect("index.jsp");
 		}
 	}
 

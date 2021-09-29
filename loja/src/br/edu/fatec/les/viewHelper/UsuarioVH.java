@@ -51,8 +51,8 @@ public class UsuarioVH implements IViewHelper {
 		} else {
 			Resultado resultado = new Resultado();
 			resultado = (Resultado) req.getAttribute("resultado");
-			if (resultado.getEntidade().isEmpty() ||
-					resultado.getEntidade() == null) {
+			if (resultado.getEntidades().isEmpty() ||
+					resultado.getEntidades() == null) {
 				Mensagem mensagem = new Mensagem();
 				mensagem.setMsg("Login e/ou Senha inválidos");
 				mensagem.setMsgStatus(MensagemStatus.ERRO);
@@ -66,7 +66,7 @@ public class UsuarioVH implements IViewHelper {
 				req.setAttribute("resultado", resultado);
 				req.getRequestDispatcher("usuarioLogin.jsp").forward(req, resp);
 			} else {
-				Usuario usuario = (Usuario) resultado.getEntidade().get(0);
+				Usuario usuario = (Usuario) resultado.getEntidades().get(0);
 				
 				HttpSession session = req.getSession();
 				

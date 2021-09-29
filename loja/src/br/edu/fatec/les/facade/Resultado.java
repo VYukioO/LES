@@ -15,10 +15,10 @@ public class Resultado {
 	public void setMsgs(ArrayList<Mensagem> msgs) {
 		this.msgs = msgs;
 	}
-	public List<AEntidade> getEntidade() {
+	public List<AEntidade> getEntidades() {
 		return entidade;
 	}
-	public void setEntidade(List<AEntidade> entidade) {
+	public void setEntidades(List<AEntidade> entidade) {
 		this.entidade = entidade;
 	}
 	

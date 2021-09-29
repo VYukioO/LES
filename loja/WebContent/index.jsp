@@ -1,9 +1,16 @@
-<!doctype html>
-<html lang="en">
+<%@page language="java" contentType="txt/html; charset=utf-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request" %>
+<%@page import="br.edu.fatec.les.dominio.EntidadeDominio" %>
+<%@page import="br.edu.fatec.les.dominio.modelo.Usuario" %>
+<%@page import="br.edu.fatec.les.facade.Resultado" %>
+<!DOCTYPE html>
+<html xmlns="http:/www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
 
 <head>
     <title>Loja</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -20,12 +27,12 @@
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Início<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">InÃ­cio<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorias</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="#">Acessórios</a>
+                            <a class="dropdown-item" href="#">AcessÃ³rios</a>
                             <a class="dropdown-item" href="#">Equipamentos</a>
                         </div>
                     </li>
@@ -52,14 +59,14 @@
 
             <div class="row">
                 <div class="col-md-3 py-3 border ">
-                    <h3 class="font-weight-bold text-center">O que está procurando?</h3>
+                    <h3 class="font-weight-bold text-center">O que estÃ¡ procurando?</h3>
                     <form method="GET" action="/search">
                         <div class="form-group">
                             <label for="name">Nome</label>
                             <input type="text" class="form-control" name="name" id="name" aria-describedby="helpId" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="name">Descrição</label>
+                            <label for="name">DescriÃ§Ã£o</label>
                             <input type="text" class="form-control" name="name" id="name" aria-describedby="helpId" placeholder="">
                         </div>
                         <div class="form-group">
@@ -68,8 +75,8 @@
                             <option value="" selected>Selecione</option>
                             <option value="FUTEBOL">Futebol</option>
                             <option value="BASQUETE">Basquete</option>
-                            <option value="VOLEI">Vôlei</option>
-                            <option value="TENIS">Tênis</option>
+                            <option value="VOLEI">VÃ´lei</option>
+                            <option value="TENIS">TÃªnis</option>
                           </select>
                         </div>
                         <div class="form-group">
@@ -77,11 +84,11 @@
                             <select class="form-control" name="category" id="category">
                               <option value="" selected>Selecione</option>
                               <option value="ROUPAS">Roupas</option>
-                              <option value="ACESSORIOS">Acessórios</option>
+                              <option value="ACESSORIOS">AcessÃ³rios</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="formControlRange">Preço</label>
+                            <label for="formControlRange">PreÃ§o</label>
                             <input type="range" min="0" max="1000" step="50" class="form-control-range" id="formControlRange" onInput="$('#rangeval').html($(this).val())">
                             <span id="rangeval">R$ 0,00</span>
                         </div>
@@ -96,8 +103,8 @@
                                 <img class="card-img-top" height="150px" src="https://images.lojanike.com.br/1024x1024/produto/tenis-nike-revolution-5-masculino-BQ3204-400-1.jpg" alt="">
                                 <div class="card-body px-2">
                                     <span class="badge badge-primary">Corrida</span>
-                                    <h4 class="card-title mb-0">Tênis</h4>
-                                    <small>Calçados</small>
+                                    <h4 class="card-title mb-0">TÃªnis</h4>
+                                    <small>CalÃ§ados</small>
                                     <h5 class="text-success">R$ 00,00</h5>
                                 </div>
                                 <div class="card-footer py-1">
@@ -113,8 +120,8 @@
                                 <img class="card-img-top" height="150px" src="https://images.lojanike.com.br/1024x1024/produto/tenis-nike-revolution-5-masculino-BQ3204-400-1.jpg" alt="">
                                 <div class="card-body px-2">
                                     <span class="badge badge-primary">Corrida</span>
-                                    <h4 class="card-title mb-0">Tênis</h4>
-                                    <small>Calçados</small>
+                                    <h4 class="card-title mb-0">TÃªnis</h4>
+                                    <small>CalÃ§ados</small>
                                     <h5 class="text-success">R$ 00,00</h5>
                                 </div>
                                 <div class="card-footer py-1">
@@ -130,8 +137,8 @@
                                 <img class="card-img-top" height="150px" src="https://images.lojanike.com.br/1024x1024/produto/tenis-nike-revolution-5-masculino-BQ3204-400-1.jpg" alt="">
                                 <div class="card-body px-2">
                                     <span class="badge badge-primary">Corrida</span>
-                                    <h4 class="card-title mb-0">Tênis</h4>
-                                    <small>Calçados</small>
+                                    <h4 class="card-title mb-0">TÃªnis</h4>
+                                    <small>CalÃ§ados</small>
                                     <h5 class="text-success">R$ 00,00</h5>
                                 </div>
                                 <div class="card-footer py-1">
@@ -147,8 +154,8 @@
                                 <img class="card-img-top" height="150px" src="https://images.lojanike.com.br/1024x1024/produto/tenis-nike-revolution-5-masculino-BQ3204-400-1.jpg" alt="">
                                 <div class="card-body px-2">
                                     <span class="badge badge-primary">Corrida</span>
-                                    <h4 class="card-title mb-0">Tênis</h4>
-                                    <small>Calçados</small>
+                                    <h4 class="card-title mb-0">TÃªnis</h4>
+                                    <small>CalÃ§ados</small>
                                     <h5 class="text-success">R$ 00,00</h5>
                                 </div>
                                 <div class="card-footer py-1">
