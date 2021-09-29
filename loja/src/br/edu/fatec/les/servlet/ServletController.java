@@ -42,7 +42,7 @@ public class ServletController extends HttpServlet {
         vhMap.put("alterarSenha", new UsuarioVH());
         commandMap.put("loginUsuario", new ConsultarCommand());
         commandMap.put("logoutUsuario", new ConsultarCommand());
-        commandMap.put("alterarSenha", new ConsultarCommand());
+        commandMap.put("alterarSenha", new AtualizarCommand());
         
         //Cliente
         vhMap.put("cadastrarCliente", new ClienteVH());
@@ -79,8 +79,6 @@ public class ServletController extends HttpServlet {
         vhMap.put("consultarProdutos", new ProdutoVH());
         commandMap.put("consultarProduto", new ConsultarCommand());
         commandMap.put("consultarProdutos", new DeletarCommand());
-        
-        
         
     }
     
